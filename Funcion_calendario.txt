@@ -1,0 +1,32 @@
+Ejercicio 1-
+  "crear tabla"
+  cl = CALENDAR(min(Dim_Facturas[Fecha]),today())
+
+Ejecicio 2-
+  "Crear columna - Año"
+   Año = YEAR(cl[Date])
+
+Ejercicio 3-
+  "Crear columna - Mes"
+   Mes = MONTH(cl[Date])
+
+Ejercicio 4-
+  "Crear columna - Trimestre y añadir text T"
+  Trimestre = "T" & ROUNDUP(MONTH(cl[Date])/3,0)  
+
+Ejercicio 5-
+  "Crear columna - Cuatrimestre "
+  Semestre= "S" & ROUNDUP(MONTH(cl[Date])/6,0)
+  
+Ejercicio 6-
+  "Crear una tabla con todos los valores de tiempo, año, mes, dia, findesemana, cuatrimestres"
+
+  "Con fecha definida manualmente"
+  dDate = VAR Fecha = CALENDAR( DATE (1900,1,1), DATE (2021,12,31)) return SELECTCOLUMNS( Fecha, "Fecha", [Date], "Año", YEAR( [Date]), "Mes", UPPER(FORMAT([Date], "mmm")), "MesNro", INT(FORMAT([Date], "M")), "NroDia", INT(FORMAT([Date],"d")),"DiaSemana", WEEKDAY( [Date],2), "Semana", WEEKNUM([Date],2), "Fin de Semana", WEEKDAY([Date],2) IN {6,7}, "TrimNro", ROUNDUP(MONTH([Date])/3,0), "Trimestre", "T" & ROUNDUP(MONTH([Date])/3,0))
+
+  "Con fecha definida automática la fecha mínima de facturas y hasta el día de hoy"
+  dDate2 = VAR Fecha = CALENDAR(min(Dim_Facturas[Fecha]),today()) return SELECTCOLUMNS( Fecha, "Fecha", [Date], "Año", YEAR( [Date]), "Mes", UPPER(FORMAT([Date], "mmm")), "MesNro", INT(FORMAT([Date], "M")), "NroDia", INT(FORMAT([Date],"d")),"DiaSemana", WEEKDAY( [Date],2), "Semana", WEEKNUM([Date],2), "Fin de Semana", WEEKDAY([Date],2) IN {6,7}, "TrimNro", ROUNDUP(MONTH([Date])/3,0), "Trimestre", "T" & ROUNDUP(MONTH([Date])/3,0))
+
+Ejercicio 7-
+
+  "Ir a relaciones" y relacionar la tabla dDate o dDate2 con la tabla Dim_facturas por medio de Fecha de ambas tablas
